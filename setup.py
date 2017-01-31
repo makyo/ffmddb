@@ -20,7 +20,7 @@ setup(
     install_requires=['pyyaml'],
     packages=find_packages(),
     setup_requires=['nose>=1.0'],
-    tests_require=['nose', 'coverage', 'mock>=2.0', 'flake8'],
+    tests_require=['nose', 'coverage', 'flake8'],
     entry_points={
         'console_scripts': [
             'ffmddb-client = ffmddb.client:run',
