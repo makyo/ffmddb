@@ -48,11 +48,13 @@ class FilterGroup:
     def is_filter_group(cls, obj):
         """duck-types a dict to see if it looks like a filter-group"""
         try:
-            if len(obj) != 1:
+            o = obj.copy()
+            if len(o) != 1:
                 return False
-            if (list(obj.keys()))[0] not in cls.CONJUNCTIONS:
+            k, v = o.popitem()
+            if k not in cls.CONJUNCTIONS:
                 return False
-            if type((list(obj.values()))[0]) not in [list, tuple]:
+            if type(v) not in [list, tuple]:
                 return False
             return True
         except:
