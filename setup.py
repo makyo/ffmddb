@@ -12,15 +12,15 @@ with open('README.rst') as f:
 
 setup(
     name='ffmddb',
-    version='pre-release-0',
+    version='0.0.0',
     description='A flat-file-with-metadata database.',
     long_description=long_description,
     author='Madison Scott-Clary',
     author_email='makyo@drab-makyo.com',
     install_requires=['pyyaml'],
     packages=find_packages(),
-    setup_requires=['nose>=1.0'],
-    tests_require=['nose', 'coverage', 'flake8'],
+    setup_requires=['nose>=1.0', 'flake8', 'six'],
+    tests_require=['nose', 'coverage', 'mock'],
     entry_points={
         'console_scripts': [
             'ffmddb-client = ffmddb.client:run',

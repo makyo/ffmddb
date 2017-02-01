@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from .field import Field
+from ffmddb.core.models.field import Field
 
 
 class FieldModel_init_TestCase(TestCase):
@@ -8,7 +8,7 @@ class FieldModel_init_TestCase(TestCase):
     def test_populates_fields(self):
         field = Field('document:')
         self.assertEqual(field.field_type, 'document')
-        self.assertEqual(field.path_parts, [])
+        self.assertEqual(field.path_parts, None)
         field = Field('metadata:foo.bar')
         self.assertEqual(field.field_type, 'metadata')
         self.assertEqual(field.path_parts, ['foo', 'bar'])
