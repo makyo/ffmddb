@@ -45,15 +45,15 @@ sphinx-help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinx-apidoc:
-	sphinx-apidoc -M -T -e -o $(APIDIR) $(SPHINXPROJ) "*_test.py"
+	sphinx-apidoc -M -T -e -a -o $(APIDIR) $(SPHINXPROJ) "*_test.py"
 
 sphinx-clean:
-	rm $(APIDIR)/$(SPHINXPROJ).*
-	rm -rf $(BUILDDIR)
+	- rm $(APIDIR)/$(SPHINXPROJ).*
+	- rm -rf $(BUILDDIR)
 
 .PHONY: sphinx-help sphinx-autodoc Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 sphinx-%: Makefile
-	@PYTHONPATH=. $(SPHINXBUILD) -M `echo $@ | sed -e 's/^sphinx-//'` "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	@ PYTHONPATH=. $(SPHINXBUILD) -M `echo $@ | sed -e 's/^sphinx-//'` "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
