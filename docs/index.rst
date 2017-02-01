@@ -6,9 +6,11 @@
 .. include:: ../README.rst
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Contents:
 
    usage
+   configuration
+   database
    API <api/index>
    use-case

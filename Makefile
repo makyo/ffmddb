@@ -16,7 +16,7 @@ test: $(VE)
 	$(VE)/bin/python setup.py nosetests
 
 .PHONY: docs
-docs: sphinx-clean sphinx-apidoc sphinx-dirhtml
+docs: sphinx-clean sphinx-apidoc sphinx-html
 
 .PHONY: clean
 clean:

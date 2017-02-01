@@ -1,0 +1,5 @@
+.body blockquote {
+    border-left: 0.5em solid #eee;
+    margin-left: 0;
+    padding-left: 2em;
+}
