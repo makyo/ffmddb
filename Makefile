@@ -11,7 +11,7 @@ test-all:
 
 .PHONY: clean
 clean:
-	rm -rf $(VE)
+	rm -rf $(VE) .tox
 	find ffmddb -name *.py[co] -exec rm -f {} \;
 
 $(VE):

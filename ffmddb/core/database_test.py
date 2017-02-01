@@ -1,3 +1,5 @@
+import six
+
 try:
     from unittest import (
         TestCase,
@@ -76,6 +78,8 @@ class CloseMethodTestCase(BaseTestCase):
 
     def test_closes_config_no_file(self):
         open_name = 'ffmddb.core.database.open'
+        if six.PY2:
+            open_name = '__builtin__.open'
         m = mock.mock_open()
         with mock.patch(open_name, m):
             self.db.close()
@@ -83,6 +87,8 @@ class CloseMethodTestCase(BaseTestCase):
 
     def test_closes_config_with_file(self):
         open_name = 'ffmddb.core.database.open'
+        if six.PY2:
+            open_name = '__builtin__.open'
         config = """
         test_db:
             collections:
@@ -103,6 +109,8 @@ class DBFromFileTestCase(TestCase):
 
     def test_creates_db_from_config_file(self):
         open_name = 'ffmddb.core.database.open'
+        if six.PY2:
+            open_name = '__builtin__.open'
         config = """
         test_db:
             collections:
