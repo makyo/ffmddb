@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from ffmddb.core.models.field import Field
 from ffmddb.core.models.query import (
     Filter,
     FilterGroup,
@@ -11,9 +12,12 @@ class FilterModelTestCase(TestCase):
 
     def test_create(self):
         f = Filter({'field': 'document:', 'op': 'eq', 'value': 'asdf'})
-        self.assertEqual(f.field, 'document:')
+        self.assertEqual(f.field, Field('document:'))
         self.assertEqual(f.operator, 'eq')
         self.assertEqual(f.value, 'asdf')
+
+
+class FilterIsFilterTestCase(TestCase):
 
     def test_is_filter_bad_keys_fails(self):
         self.assertFalse(Filter.is_filter(
@@ -33,6 +37,9 @@ class FilterGroupModelTestCase(TestCase):
         f = FilterGroup('and', [])
         self.assertEqual(f.conjunction, 'and')
         self.assertEqual(f.filter_list, [])
+
+
+class FilterGroupIsFilterGroupTestCase(TestCase):
 
     def test_is_filter_group_bad_len_fails(self):
         self.assertFalse(FilterGroup.is_filter_group(
@@ -55,6 +62,9 @@ class QueryModelTestCase(TestCase):
     def test_create(self):
         q = Query({'query': []})
         self.assertEqual(len(q.core_group.filter_list), 0)
+
+
+class QueryParseGroupTestCase(TestCase):
 
     def test_parse_group_filter(self):
         q = Query({'query': [

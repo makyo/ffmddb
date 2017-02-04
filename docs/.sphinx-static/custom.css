@@ -3,3 +3,16 @@
     margin-left: 0;
     padding-left: 2em;
 }
+
+.body code.docutils.inline {
+    white-space: normal;
+}
+
+dl.attribute dt em.property {
+    display: none;
+}
+
+dl.attribute dt em.property:after {
+    display: inline;
+    content: "<...>";
+}
