@@ -1,22 +1,45 @@
 FIELD_TYPES = (
-    'document',
-    'metadata',
-    'name',
+    'document', 'd',
+    'metadata', 'm',
+    'name',     'n',
 )
 
 PATH_FIELDS = (
-    'metadata',
+    'metadata', 'm',
 )
 
 
 class Field:
 
     def __init__(self, field_spec):
+        self.field_spec = field_spec
         self.field_type, parts = Field.parse_spec(field_spec)
         if self.field_type in PATH_FIELDS:
             self.path_parts = parts
         else:
             self.path_parts = None
+
+    def marshal(self):
+        return self.field_spec
+
+    def run(self, document):
+        if self.field_type in ['document', 'd']:
+            return document.document_field
+        elif self.field_type in ['name', 'n']:
+            return document.name
+        elif self.field_type in ['metadata', 'm']:
+            result = document.metadata
+            for part in self.path_parts:
+                result = result.get(part, {})
+            if result == {}:
+                return None
+            return result
+
+    def __str__(self):
+        return str(self.__dict__)
+
+    def __eq__(self, other):
+        return str(self) == str(other)
 
     @classmethod
     def parse_spec(cls, spec):

@@ -1,6 +1,7 @@
 import yaml
 
 from ffmddb.core.models.config import Configuration
+from ffmddb.core.models.index import CoreIndex
 
 
 class Database:
@@ -11,6 +12,7 @@ class Database:
     def __init__(self, config_obj, config_file=None):
         self.config = config_obj
         self.config_file = config_file
+        self.core_index = CoreIndex()
 
     def get_documents(self, collection_name, query):
         pass

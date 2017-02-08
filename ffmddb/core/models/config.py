@@ -1,3 +1,5 @@
+import yaml
+
 from ffmddb.core.models.document import (
     Collection,
     CollectionField,
@@ -11,13 +13,9 @@ from ffmddb.core.models.index import (
 
 DEFAULT_OPTIONS = {
     'fence': ['---+', '---+'],
-    'occurence': 'first',
+    'indices_location': '.ffmddb_idx',
+    'multiple_metadata': False,
 }
-
-OCCURENCE_CHOICES = (
-    'first',
-    'last',
-)
 
 CONFIG_VERSION = 1
 
@@ -32,7 +30,16 @@ class Configuration:
         self.options = options
 
     def marshal(self):
-        pass
+        """marshals the configuration object back to YAML"""
+        marshaled_config = {
+            self.name: {
+                'collections': [c.marshal() for c in
+                                self.collections.values()],
+                'indices': [i.marshal() for i in self.indices.values()],
+            }
+        }
+        marshaled_config[self.name].update(self.options)
+        return yaml.safe_dump(marshaled_config)
 
     @classmethod
     def from_object(cls, config_obj):
