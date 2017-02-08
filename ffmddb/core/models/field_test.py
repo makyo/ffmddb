@@ -1,9 +1,10 @@
 from unittest import TestCase
 
+from ffmddb.core.models.document import Document
 from ffmddb.core.models.field import Field
 
 
-class FieldModel_init_TestCase(TestCase):
+class FieldModelTestCase(TestCase):
 
     def test_populates_fields(self):
         field = Field('document:')
@@ -14,7 +15,44 @@ class FieldModel_init_TestCase(TestCase):
         self.assertEqual(field.path_parts, ['foo', 'bar'])
 
 
-class FieldModel_parse_spec_TestCase(TestCase):
+class MarshalTestCase(TestCase):
+
+    def test_marshal(self):
+        field = Field('document:')
+        self.assertEqual(field.marshal(), 'document:')
+
+
+class RunTestCase(TestCase):
+
+    @classmethod
+    def setup_class(cls):
+        cls.d = Document(db={},
+                         collection='collection',
+                         name='Test document',
+                         document_field="asdf",
+                         metadata={
+                             'foo': {
+                                 'bar': 42,
+                             },
+                             'qux': ['a', 'b', 'c']
+                         })
+
+    def test_document(self):
+        field = Field('document:')
+        self.assertEqual(field.run(self.d), 'asdf')
+
+    def test_name(self):
+        field = Field('name:')
+        self.assertEqual(field.run(self.d), 'Test document')
+
+    def test_metadata(self):
+        field = Field('metadata:foo.bar')
+        self.assertEqual(field.run(self.d), 42)
+        field = Field('metadata:foo.baz')
+        self.assertEqual(field.run(self.d), None)
+
+
+class ParseSpecTestCase(TestCase):
 
     def test_document_field(self):
         spec = Field.parse_spec('document:')

@@ -6,7 +6,8 @@ from ffmddb.core.models.field import Field
 class Filter:
     """Stores a single filter for comparing a field to a value"""
 
-    #: OPERATORS contains a list of comparisons and operations for running queries
+    #: OPERATORS contains a list of comparisons and operations for running
+    #: queries
     OPERATORS = {
         'eq': lambda x, y: x == y,
         'ne': lambda x, y: x != y,
@@ -97,7 +98,7 @@ class Query:
         """runs the core filter group which contains all filters and groups in
         the query
         """
-        self.core_group.run(document)
+        return self.core_group.run(document)
 
     def _parse_group(self, conjunction, query_list):
         """parses a single entry in the query dict either as a filter or filter

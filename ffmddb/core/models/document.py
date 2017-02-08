@@ -1,5 +1,9 @@
 import os
+import re
 import yaml
+
+
+NEWLINES = re.compile(r'\n\n+')
 
 
 class Collection:
@@ -23,7 +27,7 @@ class CollectionField:
         self.field = field
 
     def marshal(self):
-        return [self.collection.name, self.field.value]
+        return [self.collection.name, self.field.marshal()]
 
 
 class Document:
@@ -44,24 +48,33 @@ class Document:
     def _read(self):
         self.valid = False
         with open(os.path.join(self.collection.path,
-                  self.document.name), 'r') as f:
-            metadata_collecting = False
+                  self.name), 'r') as f:
+            collecting = False
+            collected = False
+            done = False
             document_field = ""
             metadata_string = ""
+            open_fence = re.compile(self.db.config.options['fence'][0])
+            close_fence = re.compile(self.db.config.options['fence'][1])
             for line in f:
-                if line.strip() == self.db.config.options['fence'][0]:
-                    metadata_collecting = True
-                    continue
-                if line.strip() == self.db.config.options['fence'][1] and \
-                        metadata_collecting:
-                    metadata_collecting = False
-                    continue
-                if metadata_collecting:
+                if not done:
+                    if not collecting and open_fence.match(line.strip()):
+                        collecting = True
+                        collected = True
+                        continue
+                    if collecting and close_fence.match(line.strip()):
+                        collecting = False
+                        done = (collected and not
+                                self.db.config.options['multiple_metadata'])
+                        continue
+                if collecting:
                     metadata_string += line
                 else:
                     document_field += line
             self.document_field = document_field
-            metadata = yaml.safe_load(metadata_string)
-            self.metadata = metadata
+            self.metadata = {}
+            if collected:
+                self.metadata = yaml.safe_load(
+                    NEWLINES.sub('', metadata_string))
             if len(self.metadata) > 0:
                 self.valid = True

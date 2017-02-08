@@ -1,11 +1,11 @@
 FIELD_TYPES = (
-    'document',
-    'metadata',
-    'name',
+    'document', 'd',
+    'metadata', 'm',
+    'name',     'n',
 )
 
 PATH_FIELDS = (
-    'metadata',
+    'metadata', 'm',
 )
 
 
@@ -23,11 +23,11 @@ class Field:
         return self.field_spec
 
     def run(self, document):
-        if self.field_type == 'document':
+        if self.field_type in ['document', 'd']:
             return document.document_field
-        elif self.field_type == 'name':
+        elif self.field_type in ['name', 'n']:
             return document.name
-        elif self.field_type == 'metadata':
+        elif self.field_type in ['metadata', 'm']:
             result = document.metadata
             for part in self.path_parts:
                 result = result.get(part, {})

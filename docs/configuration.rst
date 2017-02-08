@@ -58,3 +58,9 @@ some more
 .. |t1r6c2| replace:: ``.ffmddb_idx``
 
 .. |t1r6c3| replace:: The folder relative to the configuration file which contains the indices.
+
+.. |t1r7c1| replace:: ``multiple_metadata``
+
+.. |t1r7c2| replace:: False
+
+.. |t1r7c3| replace:: Whether or not to collect metadata from multiple fenced blocks.

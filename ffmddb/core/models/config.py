@@ -13,7 +13,8 @@ from ffmddb.core.models.index import (
 
 DEFAULT_OPTIONS = {
     'fence': ['---+', '---+'],
-    'indices_location': '.ffmddb_idx'
+    'indices_location': '.ffmddb_idx',
+    'multiple_metadata': False,
 }
 
 CONFIG_VERSION = 1

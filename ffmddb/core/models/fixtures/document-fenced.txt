@@ -1,0 +1,14 @@
+<!--
+foo:
+    bar: 42
+qux:
+    - a
+    - b
+    - c
+-->
+
+Document data
+
+<!--
+additional: metadata
+-->
