@@ -31,6 +31,7 @@ Config entry  Default   Explanation
 |t1r3c1|      N/A       |t1r3c3|
 |t1r4c1|      |t1r4c2|  |t1r4c3|
 |t1r6c1|      |t1r6c2|  |t1r6c3|
+|t1r7c1|      |t1r7c2|  |t1r7c3|
 ============  ========  ===========
 
 some more
