@@ -57,7 +57,7 @@ class ReadDocumentTestCase(TestCase):
                             'ffmddb/core/models/fixtures/document-fenced.txt')
 
     def test_defaults(self):
-        self.doc1._read()
+        self.doc1.read()
         self.assertEqual(self.doc1.document_field.strip(), 'Document data')
         self.assertEqual(self.doc1.metadata, {
             'foo': {
@@ -68,12 +68,12 @@ class ReadDocumentTestCase(TestCase):
         self.assertTrue(self.doc1.valid)
 
     def test_no_metadata_invalid(self):
-        self.doc2._read()
+        self.doc2.read()
         self.assertFalse(self.doc2.valid)
 
     def test_non_default_fence(self):
         self.db.config.options['fence'] = ['<!--', '-->']
-        self.doc3._read()
+        self.doc3.read()
         self.assertEqual(
             self.doc3.document_field.strip(),
             'Document data\n\n<!--\nadditional: metadata\n-->')
@@ -88,7 +88,7 @@ class ReadDocumentTestCase(TestCase):
     def test_multiple_metadata(self):
         self.db.config.options['fence'] = ['<!--', '-->']
         self.db.config.options['multiple_metadata'] = True
-        self.doc3._read()
+        self.doc3.read()
         self.assertEqual(self.doc3.document_field.strip(), 'Document data')
         self.assertEqual(self.doc3.metadata, {
             'foo': {

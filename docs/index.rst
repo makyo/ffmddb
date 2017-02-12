@@ -12,5 +12,7 @@
    usage
    configuration
    database
+   fields
+   queries
    API <api/index>
    use-case

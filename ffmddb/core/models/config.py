@@ -24,10 +24,22 @@ class Configuration:
     """Stores database configuration read from a file or the user."""
 
     def __init__(self, name, collections, indices, options):
+        """TODO"""
         self.name = name
         self.collections = collections
         self.indices = indices
         self.options = options
+
+    def write(self, filename):
+        """TODO"""
+        config_str = self.marshal()
+        with open(filename, 'w') as f:
+            f.write(config_str)
+
+    def close(self, filename):
+        """TODO"""
+        if filename:
+            self.write(filename)
 
     def marshal(self):
         """marshals the configuration object back to YAML"""
@@ -121,4 +133,5 @@ class Configuration:
         return Configuration(name, collections, indices, options)
 
     class MalformedConfiguration(Exception):
+        """TODO"""
         pass

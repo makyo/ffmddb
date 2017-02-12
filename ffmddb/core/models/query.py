@@ -31,7 +31,7 @@ class Filter:
         provided operation
         """
         return self.OPERATORS[self.operator](
-            self.field.run(document),
+            self.field.get(document),
             self.value)
 
     @classmethod
@@ -119,4 +119,5 @@ class Query:
         return FilterGroup(conjunction, group_items)
 
     class MalformedQuery(Exception):
+        """TODO"""
         pass

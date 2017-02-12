@@ -22,7 +22,7 @@ class MarshalTestCase(TestCase):
         self.assertEqual(field.marshal(), 'document:')
 
 
-class RunTestCase(TestCase):
+class GetTestCase(TestCase):
 
     @classmethod
     def setup_class(cls):
@@ -39,17 +39,17 @@ class RunTestCase(TestCase):
 
     def test_document(self):
         field = Field('document:')
-        self.assertEqual(field.run(self.d), 'asdf')
+        self.assertEqual(field.get(self.d), 'asdf')
 
     def test_name(self):
         field = Field('name:')
-        self.assertEqual(field.run(self.d), 'Test document')
+        self.assertEqual(field.get(self.d), 'Test document')
 
     def test_metadata(self):
         field = Field('metadata:foo.bar')
-        self.assertEqual(field.run(self.d), 42)
+        self.assertEqual(field.get(self.d), 42)
         field = Field('metadata:foo.baz')
-        self.assertEqual(field.run(self.d), None)
+        self.assertEqual(field.get(self.d), None)
 
 
 class ParseSpecTestCase(TestCase):

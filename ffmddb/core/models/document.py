@@ -2,6 +2,8 @@ import os
 import re
 import yaml
 
+from ffmddb.core.models.field import Field
+
 
 NEWLINES = re.compile(r'\n\n+')
 
@@ -10,10 +12,12 @@ class Collection:
     """Stores a reference to a collection of documents"""
 
     def __init__(self, name, path):
+        """TODO"""
         self.name = name
         self.path = path
 
     def marshal(self):
+        """TODO"""
         return {'name': self.name, 'path': self.path}
 
 
@@ -23,10 +27,12 @@ class CollectionField:
     """
 
     def __init__(self, collection, field):
+        """TODO"""
         self.collection = collection
         self.field = field
 
     def marshal(self):
+        """TODO"""
         return [self.collection.name, self.field.marshal()]
 
 
@@ -36,18 +42,28 @@ class Document:
     def __init__(self, db, collection, name, document_field=None,
                  metadata=None):
         self.db = db
-        self.collection = collection
-        self.name = name
-        self.document_field = document_field
-        self.metadata = metadata
+        self._collection = collection
+        self._name = name
+        self._document_field = document_field
+        self._metadata = metadata
         self.valid = None
+        self.changed = False
+
+    def update(self, field, value):
+        """TODO"""
+        if isinstance(field, str):
+            field = Field(field)
+        self.changed = True
+        field.set(document, value)
 
     def marshal(self):
+        """TODO"""
         pass
 
-    def _read(self):
+    def read(self):
+        """TODO"""
         self.valid = False
-        with open(os.path.join(self.collection.path,
+        with open(os.path.join(self._collection.path,
                   self.name), 'r') as f:
             collecting = False
             collected = False
@@ -71,10 +87,10 @@ class Document:
                     metadata_string += line
                 else:
                     document_field += line
-            self.document_field = document_field
-            self.metadata = {}
+            self._document_field = document_field
+            self._metadata = {}
             if collected:
-                self.metadata = yaml.safe_load(
+                self._metadata = yaml.safe_load(
                     NEWLINES.sub('', metadata_string))
             if len(self.metadata) > 0:
                 self.valid = True
